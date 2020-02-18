@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--    &lt;!&ndash; SpringContext&ndash;&gt;
+    <bean id="springContext" class="SpringContext"/>
+
+    &lt;!&ndash; DAO &ndash;&gt;
+    <bean id="userDao" class="UserDaoImpl"/>
+
+    &lt;!&ndash; Service &ndash;&gt;
+    <bean id="userService" class="UserServiceImpl"/>-->
+
+    <!-- 注解开启 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.cjw.my.shop.web.admin"/>
+
+</beans>
