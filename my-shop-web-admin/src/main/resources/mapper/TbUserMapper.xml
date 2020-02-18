@@ -128,4 +128,11 @@
         </where>
     </delete>
 
+    <select id="page" parameterType="java.util.Map" resultType="TbUser">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM tb_user AS a
+        LIMIT #{start},#{length}
+    </select>
+
 </mapper>

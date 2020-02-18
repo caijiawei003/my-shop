@@ -4,6 +4,7 @@ import com.cjw.my.shop.domain.TbUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program:my-shop
@@ -83,4 +84,11 @@ public interface TbUserDao {
      */
     void deleteMulti(String[] ids);
 
+
+    /**
+     * 分页查询
+     * @param params
+     * @return
+     */
+    public List<TbUser>  page(Map<String,Object> params);
 }

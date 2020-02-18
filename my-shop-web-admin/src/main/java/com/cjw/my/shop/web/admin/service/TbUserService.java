@@ -55,4 +55,9 @@ public interface TbUserService {
      * @param ids
      */
     public void deleteMulti(String[] ids);
+
+    /**
+     * 分页
+     */
+    public List<TbUser>  page(int start,int length);
 }

@@ -90,7 +90,9 @@
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">用户列表</h3>
-                                    <div class="row" style="padding-left: 15px; padding-top: 10px;">
+                                </div>
+
+                                <div class="box-body">
                                         <div class="col-xs-12">
                                             <a href="/user/form" type="button" class="btn btn-default"><i class="fa fa-fw fa-plus"></i>新增</a> &nbsp;&nbsp;
                                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-fw fa-trash-o"></i>删除</button>    &nbsp;&nbsp;
@@ -98,11 +100,10 @@
                                             <a href="#" type="button" class="btn btn-default"><i class="fa fa-fw fa-level-up"></i>导出</a>   &nbsp;&nbsp;
                                             <button class="btn btn-primary" onclick="$('.box-search').css('display') == 'none'?$('.box-search').show('fast'):$('.box-search').hide('fast')"><i class="fa fa-fw fa-search"></i>搜索</button>
                                         </div>
-                                    </div>
                                 </div>
                                 <!-- /.box-header -->
-                                <div class="box-body table-responsive no-padding">
-                                    <table class="table table-hover">
+                                <div class="box-body table-responsive">
+                                    <table id="dataTable" class="table table-hover">
                                         <thead>
                                           <tr>
                                               <th><input type="checkbox" class="minimal master"></th>
@@ -149,5 +150,21 @@
         <!--模态框 -->
         <sys:modal/>
 
+        <script>
+            $(function () {
+                $('#dataTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "ordering": false,
+                    "processing": true,
+                    "searching": false,
+                    "info": false,
+                    "deferRender": true,
+                    "serverSide": true,
+                    "ajax": "/user/page"
+                });
+            });
+        </script>
     </body>
 </html>

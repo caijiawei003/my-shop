@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program:my-shop
@@ -111,5 +113,13 @@ public class TbUserServiceImpl implements TbUserService {
     @Override
     public void deleteMulti(String[] ids) {
         tbUserDao.deleteMulti(ids);
+    }
+
+    @Override
+    public List<TbUser>  page(int start, int length) {
+        Map params = new HashMap<String,Object>();
+        params.put("start",start);
+        params.put("length",length);
+        return tbUserDao.page(params);
     }
 }
