@@ -2,6 +2,7 @@ package com.cjw.my.shop.web.admin.service;
 
 import com.cjw.my.shop.domain.TbUser;
 import com.my.shop.commons.dto.BaseResult;
+import com.my.shop.commons.dto.PageInfo;
 
 import java.util.List;
 
@@ -59,5 +60,11 @@ public interface TbUserService {
     /**
      * 分页
      */
-    public List<TbUser>  page(int start,int length);
+    PageInfo<TbUser> page(int start, int length,int draw,TbUser tbUser);
+
+    /**
+     * 总数
+     * @return
+     */
+    public Integer count(TbUser tbUser);
 }

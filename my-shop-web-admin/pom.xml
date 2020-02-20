@@ -76,17 +76,6 @@
         </dependency>
         <!-- MyBatis End -->
 
-        <!-- Json Begin -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <!-- Json End -->
-
         <!-- Junit Begin -->
         <dependency>
             <groupId>org.springframework</groupId>

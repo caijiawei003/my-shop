@@ -17,6 +17,11 @@
     <description></description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.cjw</groupId>
+            <artifactId>my-shop-commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

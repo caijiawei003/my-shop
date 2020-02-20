@@ -4,6 +4,7 @@ import com.cjw.my.shop.domain.TbUser;
 import com.cjw.my.shop.web.admin.dao.TbUserDao;
 import com.cjw.my.shop.web.admin.service.TbUserService;
 import com.my.shop.commons.dto.BaseResult;
+import com.my.shop.commons.dto.PageInfo;
 import com.my.shop.commons.utils.RegexpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,10 +117,22 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public List<TbUser>  page(int start, int length) {
+    public PageInfo<TbUser> page(int start, int length, int draw,TbUser tbUser) {
+        PageInfo<TbUser> pageInfo = new PageInfo<>();
+        pageInfo.setDraw(draw);
+        int count = count(tbUser);
+        pageInfo.setRecordsTotal(count);
+        pageInfo.setRecordsFiltered(count);
         Map params = new HashMap<String,Object>();
         params.put("start",start);
         params.put("length",length);
-        return tbUserDao.page(params);
+        params.put("tbUser",tbUser);
+        pageInfo.setData(tbUserDao.page(params));
+        return pageInfo;
+    }
+
+    @Override
+    public Integer count(TbUser tbUser) {
+        return tbUserDao.count(tbUser);
     }
 }

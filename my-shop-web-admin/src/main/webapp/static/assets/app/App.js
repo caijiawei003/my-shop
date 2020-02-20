@@ -104,7 +104,76 @@ var App = function () {
                 },500);
             }
         }
-    }
+    };
+
+    /**
+     * dataTables渲染
+     * @param url
+     * @param columns
+     */
+    var handlerInitDataTables = function (url,columns) {
+      var _dataTable =  $('#dataTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "ordering": false,
+            "processing": true,
+            "searching": false,
+            "info": true,
+            "deferRender": true,
+            "serverSide": true,
+            "ajax":{
+                "url": url
+            },
+            "columns": columns,
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            //表格重绘触发js渲染
+            "drawCallback": function( settings ) {
+                handlerInitICheck();
+                handlerCheckAll();
+            }
+        });
+      return _dataTable;
+    };
+
+    /**
+     * 详情显示
+     * @param url
+     */
+    var handlerShowDetail = function (url) {
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "html",
+            success: function (data) {
+                $("#modal-detail-body").html(data);
+                $("#modal-detail").modal("show");
+            }
+        });
+    };
 
     return{
         init : function (){
@@ -118,6 +187,14 @@ var App = function () {
 
         deleteMulti: function (url) {
             handlerDeleteMulti(url);
+        },
+
+        initDataTables: function (url,columns) {
+           return handlerInitDataTables(url,columns);
+        },
+
+        showDetail: function (url) {
+            handlerShowDetail(url);
         }
     }
 }();

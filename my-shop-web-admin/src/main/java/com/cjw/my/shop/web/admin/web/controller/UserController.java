@@ -3,6 +3,7 @@ package com.cjw.my.shop.web.admin.web.controller;
 import com.cjw.my.shop.domain.TbUser;
 import com.cjw.my.shop.web.admin.service.TbUserService;
 import com.my.shop.commons.dto.BaseResult;
+import com.my.shop.commons.dto.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program:my-shop
@@ -42,9 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
-    public String list(Model model){
-        List<TbUser> tbUsers = tbUserService.selectAll();
-        model.addAttribute("tbUsers",tbUsers);
+    public String list(){
         return "user_list";
     }
 
@@ -108,18 +109,25 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "page")
-    public String page(HttpServletRequest request){
+    public PageInfo<TbUser> page(HttpServletRequest request,TbUser tbUser){
         String strDraw = request.getParameter("draw");
         String strStart = request.getParameter("start");
         String strLength = request.getParameter("length");
         int draw = strDraw == null? 0:Integer.parseInt(strDraw);
         int start = strStart == null? 0:Integer.parseInt(strStart);
         int length =  strLength == null? 10:Integer.parseInt(strLength);
-        List<TbUser> tbUsers = tbUserService.page(start,length);
-        for (TbUser tbUser :tbUsers
-             ) {
-            System.out.println(tbUser.getUsername());
-        }
-        return "";
+        PageInfo<TbUser> pageInfo = tbUserService.page(start,length,draw,tbUser);
+        return pageInfo;
+    }
+
+    /**
+     * 显示用户详情
+     * @param tbUser
+     * @return
+     */
+    @RequestMapping(value = "detail",method = RequestMethod.GET)
+    public String detail(TbUser tbUser){
+        System.out.println(tbUser.getUsername());
+       return "user_detail";
     }
 }

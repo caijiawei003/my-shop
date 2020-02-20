@@ -37,3 +37,25 @@
 <!-- app -->
 <script src="/static/assets/app/validate.js"></script>
 <script src="/static/assets/app/App.js"></script>
+
+<!-- /.modal -->
+<div class="modal fade" id="modal-detail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h2>查看详情</h2>
+            </div>
+            <div class="modal-body">
+                <p id="modal-detail-body">&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

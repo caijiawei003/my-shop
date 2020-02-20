@@ -91,4 +91,10 @@ public interface TbUserDao {
      * @return
      */
     public List<TbUser>  page(Map<String,Object> params);
+
+    /**
+     * 总数
+     * @return
+     */
+    public Integer count(TbUser tbUser);
 }

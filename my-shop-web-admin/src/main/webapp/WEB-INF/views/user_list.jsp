@@ -37,14 +37,14 @@
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">高级搜索</h3>
-                                    <form:form cssClass="form-horizontal" action="/user/search" method="post" modelAttribute="tbUser">
-                                        <div class="row" style="margin-top: 15px">
+
+                                        <div class="row form-horizontal" style="margin-top: 15px">
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="form-group">
                                                     <label for="email" class="col-sm-4 control-label">邮箱</label>
 
                                                     <div class="col-sm-8">
-                                                        <form:input path="email"  cssClass="form-control" placeholder="邮箱"/>
+                                                        <input class="form-control" id="email" placeholder="邮箱"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -53,7 +53,7 @@
                                                     <label for="username" class="col-sm-4 control-label">姓名</label>
 
                                                     <div class="col-sm-8">
-                                                        <form:input path="username" cssClass="form-control" placeholder="姓名"/>
+                                                        <input class="form-control" id="username" placeholder="姓名"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -62,15 +62,15 @@
                                                     <label for="phone" class="col-sm-4 control-label">手机号</label>
 
                                                     <div class="col-sm-8">
-                                                        <form:input path="phone"  cssClass="form-control" placeholder="手机号"/>
+                                                        <input class="form-control" id="phone" placeholder="手机号"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="box-footer">
-                                            <button type="submit" class="btn btn-info pull-right">搜索</button>
+                                            <button type="button" class="btn btn-info pull-right" onclick="search()">搜索</button>
                                         </div>
-                                    </form:form>
+
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                     <table id="dataTable" class="table table-hover">
                                         <thead>
                                           <tr>
-                                              <th><input type="checkbox" class="minimal master"></th>
+                                            <th><input type="checkbox" class="minimal master"></th>
                                             <th>ID</th>
                                             <th>用户名</th>
                                             <th>手机号</th>
@@ -116,21 +116,6 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${tbUsers}" var="tbUser">
-                                            <tr>
-                                                <td><input id="${tbUser.id}"  type="checkbox" class="minimal"></td>
-                                                <td>${tbUser.id}</td>
-                                                <td>${tbUser.username}</td>
-                                                <td>${tbUser.phone}</td>
-                                                <td>${tbUser.email}</td>
-                                                <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
-                                                <td>
-                                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-fw fa-search"></i>查看</a> &nbsp;&nbsp;&nbsp;
-                                                    <a href="#" type="button" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>   &nbsp;&nbsp;&nbsp;
-                                                    <a href="#" type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i>删除</a> &nbsp;&nbsp;&nbsp;
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -149,22 +134,45 @@
 
         <!--模态框 -->
         <sys:modal/>
+<script>
+    //表格变量
+    var _dataTable = null;
 
-        <script>
-            $(function () {
-                $('#dataTable').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "ordering": false,
-                    "processing": true,
-                    "searching": false,
-                    "info": false,
-                    "deferRender": true,
-                    "serverSide": true,
-                    "ajax": "/user/page"
-                });
-            });
-        </script>
+    $(function(){
+        //dataTables渲染
+        var columns = [
+            {"data": function ( row, type, val, meta ) {
+                    return '<input id="'+ row.id +'"  type="checkbox" class="minimal">';
+                }},
+            { "data": "id" },
+            { "data": "username" },
+            { "data": "phone" },
+            { "data": "email" },
+            { "data": "updated" },
+            {"data": function ( row, type, val, meta ) {
+                    var url = '/user/detail?id='+row.id;
+                    return '<button type="button" class="btn btn-default" onclick="App.showDetail(\''+url+'\')"><i class="fa fa-fw fa-search"></i>查看</button> &nbsp;&nbsp;&nbsp'+
+                        '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>   &nbsp;&nbsp;&nbsp'+
+                        '<a href="#" type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i>删除</a> &nbsp;&nbsp;&nbsp';
+                }}
+        ]
+        _dataTable =  App.initDataTables("/user/page",columns);
+
+    });
+
+    function search(){
+        var username = $("#username").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
+        var param = {
+            "username":username,
+            "email":email,
+            "phone":phone
+        };
+        _dataTable.settings()[0].ajax.data = param;
+        _dataTable.ajax.reload();
+    }
+
+</script>
     </body>
 </html>
