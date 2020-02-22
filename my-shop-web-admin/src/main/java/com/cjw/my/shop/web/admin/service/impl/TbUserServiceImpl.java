@@ -63,7 +63,7 @@ public class TbUserServiceImpl implements TbUserService {
             }
             //更新用户
             else{
-                tbUserDao.update(tbUser);
+                update(tbUser);
             }
             baseResult = baseResult.success("保存用户信息成功！");
         }
@@ -107,11 +107,6 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public List<TbUser> search(TbUser tbUser) {
-        return tbUserDao.search(tbUser);
-    }
-
-    @Override
     public void deleteMulti(String[] ids) {
         tbUserDao.deleteMulti(ids);
     }
@@ -134,5 +129,10 @@ public class TbUserServiceImpl implements TbUserService {
     @Override
     public Integer count(TbUser tbUser) {
         return tbUserDao.count(tbUser);
+    }
+
+    @Override
+    public void update(TbUser tbUser) {
+        tbUserDao.update(tbUser);
     }
 }

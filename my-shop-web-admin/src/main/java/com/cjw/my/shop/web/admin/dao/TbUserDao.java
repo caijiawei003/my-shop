@@ -57,26 +57,12 @@ public interface TbUserDao {
     public int update(TbUser tbUser);
 
     /**
-     * @Description: 根据名字模糊查询用户
-     * @Author: 蔡嘉伟 on 2020/2/3 16:45
-     * @param:  String
-     * @return: list
-    */
-    public List<TbUser> selectByName(String username);
-
-    /**
      * @Description: 根据邮箱查询用户
      * @Author: 蔡嘉伟 on 2020/2/4 10:02
      * @param:  String email
      * @return: TbUser
     */
     public TbUser getByEmail(String email);
-
-    /**
-     * 搜索
-     * @return list
-     */
-    public List<TbUser> search(TbUser tbUser);
 
     /**
      * 批量删除

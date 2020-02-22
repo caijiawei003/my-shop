@@ -134,6 +134,7 @@
 
         <!--模态框 -->
         <sys:modal/>
+        <sys:detail title="查看用户详情"/>
 <script>
     //表格变量
     var _dataTable = null;
@@ -153,7 +154,7 @@
                     var url = '/user/detail?id='+row.id;
                     return '<button type="button" class="btn btn-default" onclick="App.showDetail(\''+url+'\')"><i class="fa fa-fw fa-search"></i>查看</button> &nbsp;&nbsp;&nbsp'+
                         '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>   &nbsp;&nbsp;&nbsp'+
-                        '<a href="#" type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i>删除</a> &nbsp;&nbsp;&nbsp';
+                        '<a href="# " type="button" class="btn btn-danger"><i class="fa fa-fw fa-trash-o"></i>删除</a> &nbsp;&nbsp;&nbsp';
                 }}
         ]
         _dataTable =  App.initDataTables("/user/page",columns);

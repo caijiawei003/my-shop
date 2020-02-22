@@ -21,7 +21,7 @@ public interface TbUserService {
      * @param:
      * @return:
      */
-    public List<TbUser> selectAll();
+     List<TbUser> selectAll();
 
     /**
      * 邮箱密码登录
@@ -29,42 +29,41 @@ public interface TbUserService {
      * @param password
      * @return
      */
-    public TbUser login(String email,String password);
+     TbUser login(String email,String password);
 
     /**
      * 保存用户
      * @param tbUser
      */
-    public BaseResult save(TbUser tbUser);
+     BaseResult save(TbUser tbUser);
 
     /**
      * 根据ID查询用户
      * @param id
      * @return TbUser
      */
-    public TbUser selectById(Long id);
+     TbUser selectById(Long id);
 
     /**
-     * 多条件搜索
+     * 更新用户信息
      * @param tbUser
-     * @return list
      */
-    public List<TbUser> search(TbUser tbUser);
+    void update(TbUser tbUser);
 
     /**
-     * 批量删除
+     * 删除用户信息
      * @param ids
      */
-    public void deleteMulti(String[] ids);
+     void deleteMulti(String[] ids);
 
     /**
-     * 分页
+     * 根据条件分页查询用户信息
      */
     PageInfo<TbUser> page(int start, int length,int draw,TbUser tbUser);
 
     /**
-     * 总数
+     * 符合条件用户总数
      * @return
      */
-    public Integer count(TbUser tbUser);
+     Integer count(TbUser tbUser);
 }

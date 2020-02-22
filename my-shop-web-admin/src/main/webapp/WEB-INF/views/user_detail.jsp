@@ -10,7 +10,7 @@
 
     <body class="hold-transition skin-blue sidebar-mini">
        <div>
-           <table id="dataTable" class="table table-hover" >
+           <table id="dataTable" class="table" >
                <tbody>
                <tr>
                    <td>邮箱：</td>

@@ -79,43 +79,11 @@
     WHERE id = #{id}
 </update>
 
-    <select id="selectByName" resultType="TbUser">
-    SELECT
-      a.id,
-      a.username,
-      a.password,
-      a.phone,
-      a.email,
-      a.created,
-      a.updated
-    FROM
-      tb_user AS a
-    WHERE
-      a.username LIKE CONCAT ('%', #{username}, '%')
-</select>
-
     <select id="getByEmail" resultType="TbUser">
         SELECT
         <include refid="baseColumn"></include>
         FROM tb_user a
         WHERE a.email = #{email}
-    </select>
-
-    <select id="search" resultType="TbUser">
-        SELECT
-        <include refid="baseColumn"></include>
-        FROM tb_user AS a
-        <where>
-            <if test="email != null and email != ''">
-                AND email LIKE CONCAT('%',#{email},'%')
-            </if>
-            <if test="username != null and username != ''">
-                AND username LIKE CONCAT('%',#{username},'%')
-            </if>
-            <if test="phone != null and phone != ''">
-                AND phone LIKE CONCAT('%',#{phone},'%')
-            </if>
-        </where>
     </select>
 
     <delete id="deleteMulti">

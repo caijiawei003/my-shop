@@ -57,6 +57,7 @@ var App = function () {
                 }
             });
 
+            //判断用户是否选择了数据项
             if(_idArray.length == 0){
                 $("#modal-message").html("您当前未选择任何数据项，请至少选择一项！");
             }
@@ -64,7 +65,10 @@ var App = function () {
                 $("#modal-message").html("是否删除选中的数据项？");
             }
 
-            //绑定确定按钮事件
+            //点击删除按钮时弹出模态框
+            $("#modal-default").modal("show");
+
+            //绑定确定按钮事件,如果用户点击确定删除
             $("#modal-buttonOk").bind("click",function () {
                 del();
             });
@@ -74,9 +78,11 @@ var App = function () {
          */
         function del() {
 
+            //数据项为0关闭模态框
             if(_idArray.length == 0){
                 $("#modal-default").modal("hide");
             }
+            //删除操作
             else{
                 setTimeout(function () {
                     $.ajax({
@@ -86,19 +92,25 @@ var App = function () {
                         "sync":false,
                         "dataType": "JSON",
                         "success": function (data) {
-                            //删除成功
+                            //无论成功失败，都需要弹出模态框进行提示，需要先解绑确定按钮
+                            $("#modal-buttonOk").unbind("click");
+                            //请求删除成功
                             if(data.status == 200){
-                                window.location.reload();
+                                //刷新页面
+                                $("#modal-buttonOk").bind("click",function () {
+                                    window.location.reload();
+                                });
                             }
-                            //删除失败
+                            //请求删除失败
                             else{
-                                $("#modal-buttonOk").unbind("click");
+                                //确定按钮的时间改为隐藏模态框
                                 $("#modal-buttonOk").bind("click",function () {
                                     $("#modal-default").modal("hide");
                                 });
-                                $("#modal-message").html("删除失败，请重新尝试！");
-                                $("#modal-default").modal("show");
                             }
+                            //无论成功失败都显示提示信息，模态框为提示
+                            $("#modal-message").html(data.message);
+                            $("#modal-default").modal("show");
                         }
                     });
                 },500);
@@ -164,6 +176,7 @@ var App = function () {
      * @param url
      */
     var handlerShowDetail = function (url) {
+        //通过ajax请求html的方式将jsp装载进模态框中
         $.ajax({
             url: url,
             type: "get",
@@ -176,23 +189,23 @@ var App = function () {
     };
 
     return{
+        //初始化
         init : function (){
             handlerInitICheck();
             handlerCheckAll();
         },
 
-        getCheckbox: function () {
-            return _checkbox;
-        },
-
+        //批量删除
         deleteMulti: function (url) {
             handlerDeleteMulti(url);
         },
 
+        //初始化dataTables
         initDataTables: function (url,columns) {
            return handlerInitDataTables(url,columns);
         },
 
+        //显示详情
         showDetail: function (url) {
             handlerShowDetail(url);
         }
