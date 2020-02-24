@@ -12,7 +12,7 @@ import java.net.URLEncoder;
  * @author:xxs_cjw
  * @create:2020-01-02 15:10
  **/
-    public final class CookieUtils {
+    public final class  CookieUtils {
 
         /**
          * 得到Cookie的值, 不编码

@@ -4,7 +4,6 @@ import com.cjw.my.shop.domain.TbUser;
 import com.cjw.my.shop.web.admin.service.TbUserService;
 import com.my.shop.commons.dto.BaseResult;
 import com.my.shop.commons.dto.PageInfo;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @program:my-shop
@@ -116,5 +112,24 @@ public class UserController {
     public String detail(TbUser tbUser){
         System.out.println(tbUser.getUsername());
        return "user_detail";
+    }
+
+    /**
+     * 删除用户
+     * @param tbUser
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("deleteById")
+    public BaseResult deleteById(TbUser tbUser){
+        BaseResult baseResult = null;
+        if(tbUser != null && tbUser.getId() != null){
+            tbUserService.delete(tbUser);
+            baseResult = BaseResult.success("删除成功！");
+        }
+        else{
+            baseResult = BaseResult.fail("删除失败！");
+        }
+        return baseResult;
     }
 }

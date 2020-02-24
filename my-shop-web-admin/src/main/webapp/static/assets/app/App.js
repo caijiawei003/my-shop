@@ -9,7 +9,7 @@ var App = function () {
     var _checkbox;
 
     //定义一个存放id数组
-    var _idArray = new Array();
+    var _idArray;
 
     /**
      * 初始化iCheck
@@ -49,7 +49,8 @@ var App = function () {
      */
     var handlerDeleteMulti = function (url) {
             //将选中元素放入数组
-            _checkbox = App.getCheckbox();
+           // _checkbox = App.getCheckbox();
+            _idArray = new Array();
             _checkbox.each(function (){
                 var _id = $(this).attr("id");
                 if(_id != null && _id != undefined && $(this).is(':checked')){
@@ -66,7 +67,7 @@ var App = function () {
             }
 
             //点击删除按钮时弹出模态框
-            $("#modal-default").modal("show");
+           // $("#modal-default").modal("show");
 
             //绑定确定按钮事件,如果用户点击确定删除
             $("#modal-buttonOk").bind("click",function () {
@@ -84,39 +85,54 @@ var App = function () {
             }
             //删除操作
             else{
-                setTimeout(function () {
-                    $.ajax({
-                        "url": url,
-                        "data":{"ids":_idArray.toString()},
-                        "type": "POST",
-                        "sync":false,
-                        "dataType": "JSON",
-                        "success": function (data) {
-                            //无论成功失败，都需要弹出模态框进行提示，需要先解绑确定按钮
-                            $("#modal-buttonOk").unbind("click");
-                            //请求删除成功
-                            if(data.status == 200){
-                                //刷新页面
-                                $("#modal-buttonOk").bind("click",function () {
-                                    window.location.reload();
-                                });
-                            }
-                            //请求删除失败
-                            else{
-                                //确定按钮的时间改为隐藏模态框
-                                $("#modal-buttonOk").bind("click",function () {
-                                    $("#modal-default").modal("hide");
-                                });
-                            }
-                            //无论成功失败都显示提示信息，模态框为提示
-                            $("#modal-message").html(data.message);
-                            $("#modal-default").modal("show");
-                        }
-                    });
-                },500);
+                var paramData = {"ids":_idArray.toString()};
+                deleteDo(url,paramData);
             }
         }
     };
+
+    function deleteDo(url,paramData) {
+        setTimeout(function () {
+            $.ajax({
+                "url": url,
+                "data":paramData,
+                "type": "POST",
+                "sync":false,
+                "dataType": "JSON",
+                "success": function (data) {
+                    //无论成功失败，都需要弹出模态框进行提示，需要先解绑确定按钮
+                    $("#modal-buttonOk").unbind("click");
+                    //请求删除成功
+                    if(data.status == 200){
+                        //刷新页面
+                        $("#modal-buttonOk").bind("click",function () {
+                            window.location.reload();
+                        });
+                    }
+                    //请求删除失败
+                    else{
+                        //确定按钮的时间改为隐藏模态框
+                        $("#modal-buttonOk").bind("click",function () {
+                            $("#modal-default").modal("hide");
+                        });
+                    }
+                    //无论成功失败都显示提示信息，模态框为提示
+                    $("#modal-message").html(data.message);
+                    $("#modal-default").modal("show");
+                }
+            });
+        },500);
+    }
+
+    var handlerDelete = function (url,id) {
+        $("#modal-message").html("是否删除选中的数据项？");
+        $("#modal-default").modal("show");
+        //绑定确定按钮事件,如果用户点击确定删除
+        $("#modal-buttonOk").bind("click",function () {
+            var paramData = {"id":id};
+            deleteDo(url,paramData);
+        });
+    }
 
     /**
      * dataTables渲染
@@ -208,6 +224,11 @@ var App = function () {
         //显示详情
         showDetail: function (url) {
             handlerShowDetail(url);
+        },
+
+        //单条删除
+        deleteById: function (url,id) {
+            handlerDelete(url,id);
         }
     }
 }();

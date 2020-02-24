@@ -66,4 +66,10 @@ public interface TbUserService {
      * @return
      */
      Integer count(TbUser tbUser);
+
+    /**
+     * 根据Id删除用户
+     * @param tbUser
+     */
+    void delete(TbUser tbUser);
 }
