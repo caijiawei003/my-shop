@@ -32,6 +32,11 @@ public class UserController {
     @Autowired
     private TbUserService tbUserService;
 
+    /**
+     * 在每个@RequestMapping方法之前运行，实现自动封装实体到modal传值到前端
+     * @param id 根据是否有id返回数据
+     * @return
+     */
     @ModelAttribute
     public TbUser getTbUser(Long id){
         TbUser tbUser = null;
@@ -54,6 +59,13 @@ public class UserController {
         return "user_form";
     }
 
+    /**
+     * 新增用户
+     * @param tbUser
+     * @param redirectAttributes 重定向的Attributes
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public String save(TbUser tbUser, RedirectAttributes redirectAttributes,Model model){
         BaseResult baseResult =  tbUserService.save(tbUser);
@@ -114,7 +126,6 @@ public class UserController {
      */
     @RequestMapping(value = "detail",method = RequestMethod.GET)
     public String detail(TbUser tbUser){
-        System.out.println(tbUser.getUsername());
        return "user_detail";
     }
 }

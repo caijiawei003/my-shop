@@ -50,13 +50,14 @@ public class TbUserServiceImpl implements TbUserService {
 
     @Override
     public BaseResult save(TbUser tbUser) {
+        //用户信息非空验证
         BaseResult baseResult = checkTbUser(tbUser);
         //用户信息通过验证
         if(baseResult.getStatus() == BaseResult.SUCCESS_200){
             tbUser.setUpdated(new Date());
             //新增用户
             if(tbUser.getId() == null){
-                //密码加密
+                //密码md5加密
                 tbUser.setPassword(DigestUtils.md5DigestAsHex(tbUser.getPassword().getBytes()));
                 tbUser.setCreated(new Date());
                 tbUserDao.insert(tbUser);

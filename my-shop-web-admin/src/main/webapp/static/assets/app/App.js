@@ -49,7 +49,7 @@ var App = function () {
      */
     var handlerDeleteMulti = function (url) {
             //将选中元素放入数组
-            _checkbox = App.getCheckbox();
+            //_checkbox = App.getCheckbox();
             _checkbox.each(function (){
                 var _id = $(this).attr("id");
                 if(_id != null && _id != undefined && $(this).is(':checked')){
@@ -66,7 +66,7 @@ var App = function () {
             }
 
             //点击删除按钮时弹出模态框
-            $("#modal-default").modal("show");
+            //$("#modal-default").modal("show");
 
             //绑定确定按钮事件,如果用户点击确定删除
             $("#modal-buttonOk").bind("click",function () {
