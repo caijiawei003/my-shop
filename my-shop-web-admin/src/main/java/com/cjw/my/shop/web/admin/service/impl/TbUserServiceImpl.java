@@ -136,4 +136,9 @@ public class TbUserServiceImpl implements TbUserService {
     public void update(TbUser tbUser) {
         tbUserDao.update(tbUser);
     }
+
+    @Override
+    public void delete(TbUser tbUser) {
+        tbUserDao.delete(tbUser);
+    }
 }

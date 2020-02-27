@@ -1,6 +1,8 @@
 package com.cjw.my.shop.web.admin.web.controller;
 
+import com.cjw.my.shop.domain.TbContent;
 import com.cjw.my.shop.domain.TbUser;
+import com.cjw.my.shop.web.admin.service.TbContentService;
 import com.cjw.my.shop.web.admin.service.TbUserService;
 import com.my.shop.commons.dto.BaseResult;
 import com.my.shop.commons.dto.PageInfo;
@@ -22,11 +24,11 @@ import javax.servlet.http.HttpServletRequest;
  * @create:2020-02-06 15:56
  **/
 @Controller
-@RequestMapping(value = "user")
-public class UserController {
+@RequestMapping(value = "content")
+public class TbContentController {
 
     @Autowired
-    private TbUserService tbUserService;
+    private TbContentService tbContentService;
 
     /**
      * 在每个@RequestMapping方法之前运行，实现自动封装实体到modal传值到前端
@@ -34,46 +36,46 @@ public class UserController {
      * @return
      */
     @ModelAttribute
-    public TbUser getTbUser(Long id){
-        TbUser tbUser = null;
+    public TbContent getTbUser(Long id){
+        TbContent tbContent = null;
         if(id != null){
-            tbUser = tbUserService.selectById(id);
+            tbContent = tbContentService.selectById(id);
         }
         else {
-            tbUser = new TbUser();
+            tbContent = new TbContent();
         }
-        return tbUser;
+        return tbContent;
     }
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(){
-        return "user_list";
+        return "content_list";
     }
 
     @RequestMapping(value = "form",method = RequestMethod.GET)
     public String form(){
-        return "user_form";
+        return "content_form";
     }
 
     /**
      * 新增用户
-     * @param tbUser
+     * @param tbContent
      * @param redirectAttributes 重定向的Attributes
      * @param model
      * @return
      */
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public String save(TbUser tbUser, RedirectAttributes redirectAttributes,Model model){
-        BaseResult baseResult =  tbUserService.save(tbUser);
+    public String save(TbContent tbContent, RedirectAttributes redirectAttributes,Model model){
+        BaseResult baseResult =  tbContentService.save(tbContent);
         //新增成功
         if(baseResult.getStatus() == BaseResult.SUCCESS_200){
            redirectAttributes.addFlashAttribute("baseResult",baseResult);
-            return "redirect:/user/list";
+            return "redirect:/content/list";
         }
         //新增失败
         else{
             model.addAttribute("baseResult",baseResult);
-            return "/user_form";
+            return "/content_form";
         }
     }
 
@@ -88,7 +90,7 @@ public class UserController {
         BaseResult baseResult = null;
         if(ids != null){
             String[] idArray = ids.split(",");
-            tbUserService.deleteMulti(idArray);
+            tbContentService.deleteMulti(idArray);
             baseResult = BaseResult.success("删除成功！");
         }
         else{
@@ -104,38 +106,38 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "page")
-    public PageInfo<TbUser> page(HttpServletRequest request,TbUser tbUser){
+    public PageInfo<TbContent> page(HttpServletRequest request,TbContent tbContent){
         String strDraw = request.getParameter("draw");
         String strStart = request.getParameter("start");
         String strLength = request.getParameter("length");
         int draw = strDraw == null? 0:Integer.parseInt(strDraw);
         int start = strStart == null? 0:Integer.parseInt(strStart);
         int length =  strLength == null? 10:Integer.parseInt(strLength);
-        PageInfo<TbUser> pageInfo = tbUserService.page(start,length,draw,tbUser);
+        PageInfo<TbContent> pageInfo = tbContentService.page(start,length,draw,tbContent);
         return pageInfo;
     }
 
     /**
      * 显示用户详情
-     * @param tbUser
+     * @param tbContent
      * @return
      */
     @RequestMapping(value = "detail",method = RequestMethod.GET)
-    public String detail(TbUser tbUser){
-       return "user_detail";
+    public String detail(TbContent tbContent){
+       return "content_detail";
     }
 
     /**
      * 删除用户
-     * @param tbUser
+     * @param tbContent
      * @return
      */
     @ResponseBody
     @RequestMapping("deleteById")
-    public BaseResult deleteById(TbUser tbUser){
+    public BaseResult deleteById(TbContent tbContent){
         BaseResult baseResult = null;
-        if(tbUser != null && tbUser.getId() != null){
-            tbUserService.delete(tbUser);
+        if(tbContent != null && tbContent.getId() != null){
+            tbContentService.delete(tbContent);
             baseResult = BaseResult.success("删除成功！");
         }
         else{

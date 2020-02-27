@@ -2,7 +2,6 @@ package com.cjw.my.shop.web.admin.web.interceptor;
 
 
 import com.cjw.my.shop.domain.TbUser;
-import com.cjw.my.shop.domain.User;
 import com.my.shop.commons.constant.ConstantUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
